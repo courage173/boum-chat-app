@@ -1,0 +1,108 @@
+.top-navigation-wrap {
+    height: 59.49px;
+    background: #120f13;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    display: flex;
+    padding: 0 20px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.top-title {
+    font-family: Noto Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 25px;
+    letter-spacing: -0.035em;
+
+    color: #e0e0e0;
+}
+.plus-icon-container {
+    width: 32px;
+    height: 32px;
+    background: #252329;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.channel-list {
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    margin: 20px 0;
+}
+.channel-badge {
+    background: #252329;
+    border-radius: 8px;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.channel-name-text {
+    font-family: Noto Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 17px;
+    line-height: 25px;
+    margin-left: 10px;
+    letter-spacing: -0.035em;
+    text-transform: uppercase;
+}
+
+.user-profile-image {
+    width: 42px;
+    height: 42px;
+    border-radius: 7px;
+}
+.sidebar-footer {
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.sidebar-footer-profile-name {
+    font-family: Noto Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 25px;
+    letter-spacing: -0.035em;
+
+    color: #828282;
+}
+
+.sidebar-channel-description {
+    font-family: Noto Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;
+    line-height: 18px;
+    letter-spacing: -0.035em;
+    color: #e0e0e0;
+    margin-top: 15px;
+}
+.sidebar-channel-name {
+    font-family: Noto Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 25px;
+    letter-spacing: -0.035em;
+    text-transform: uppercase;
+    color: #e0e0e0;
+}
+.user-name-text {
+    font-family: Noto Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 25px;
+    letter-spacing: -0.035em;
+    color: #828282;
+    margin-left: 10px;
+}

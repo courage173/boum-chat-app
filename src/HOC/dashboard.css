@@ -1,0 +1,14 @@
+.dashboard-main-wrap {
+    display: flex;
+    height: 100%;
+}
+.side-bar-container {
+    width: 310px;
+    position: absolute;
+    /* background: #333333; */
+    background-color: #0b090c;
+    height: 100%;
+}
+.children-wrap {
+    margin-left: 350px;
+}

@@ -1,9 +1,13 @@
+import React from 'react';
+import ChatPage from './pages/Chat';
+import './index.css';
+
 function App() {
-  return (
-    <div className="App">
-      <h1>enjoying</h1>
-    </div>
-  );
+    return (
+        <div style={{ height: '100vh' }}>
+            <ChatPage />
+        </div>
+    );
 }
 
 export default App;
