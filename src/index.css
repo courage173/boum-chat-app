@@ -7,3 +7,10 @@ body {
     -moz-osx-font-smoothing: grayscale;
     color: #fff;
 }
+
+html,
+body,
+#root,
+.App {
+    height: 100%;
+}

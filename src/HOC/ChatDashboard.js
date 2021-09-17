@@ -2,6 +2,7 @@ import React from 'react';
 import Sidebar from '../components/sidebar/Sidebar';
 import './dashboard.css';
 import PropTypes from 'prop-types';
+import Header from '../components/header/Header';
 
 const ChatDashboard = ({ children }) => {
     return (
@@ -9,7 +10,10 @@ const ChatDashboard = ({ children }) => {
             <div className="side-bar-container ">
                 <Sidebar />
             </div>
-            <div className="children-wrap">{children}</div>
+            <div className="dashboard-right-side">
+                <Header />
+                <div className="children-wrap">{children}</div>
+            </div>
         </div>
     );
 };
