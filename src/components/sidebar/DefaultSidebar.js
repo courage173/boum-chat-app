@@ -5,7 +5,7 @@ import FormField from '../../utils/form/FormField';
 import SearchIcon from '@mui/icons-material/Search';
 import PropTypes from 'prop-types';
 
-const DefaultSidebar = ({ handleClick }) => {
+const DefaultSidebar = ({ handleClick, toggleModal }) => {
     const [state, setState] = useState({
         formdata: {
             search: {
@@ -63,7 +63,10 @@ const DefaultSidebar = ({ handleClick }) => {
                         Channels
                     </span>
                 </div>
-                <div className="plus-icon-container">
+                <div
+                    className="plus-icon-container"
+                    onClick={() => toggleModal(true)}
+                >
                     {' '}
                     <AddIcon />{' '}
                 </div>
@@ -100,5 +103,6 @@ const DefaultSidebar = ({ handleClick }) => {
 
 DefaultSidebar.propTypes = {
     handleClick: PropTypes.func,
+    toggleModal: PropTypes.func,
 };
 export default DefaultSidebar;

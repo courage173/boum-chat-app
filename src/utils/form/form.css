@@ -18,3 +18,12 @@
     border: none;
     outline: none;
 }
+
+.default-form-text-area {
+    box-shadow: #828282 0px 0px 0px 9999px inset;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+}

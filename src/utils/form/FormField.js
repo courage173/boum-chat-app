@@ -31,25 +31,55 @@ function FormField({
         switch (formdata.element) {
             case 'input':
                 template = (
-                    <div className={`${altStyle} input-wrap`}>
-                        {Icon && <Icon />}
+                    <>
+                        <div className={`${altStyle} input-wrap`}>
+                            {Icon && <Icon />}
 
-                        <input
-                            {...formdata.config}
-                            value={formdata.value}
-                            style={{
-                                boxShadow: '#3c393f 0px 0px 0px 9999px inset',
-                                ...styles,
-                            }}
-                            onBlur={event => change({ event, id, blur: true })}
-                            onChange={event => change({ event, id })}
-                            id={id}
-                            className={`${inputClass} default-form`}
-                        />
+                            <input
+                                {...formdata.config}
+                                value={formdata.value}
+                                style={{
+                                    boxShadow:
+                                        '#3c393f 0px 0px 0px 9999px inset',
+                                    ...styles,
+                                }}
+                                onBlur={event =>
+                                    change({ event, id, blur: true })
+                                }
+                                onChange={event => change({ event, id })}
+                                id={id}
+                                className={`${inputClass} default-form`}
+                            />
+                        </div>
                         {showError()}
-                    </div>
+                    </>
                 );
-
+                break;
+            case 'textArea':
+                template = (
+                    <>
+                        <div className={`${altStyle} input-wrap`}>
+                            <textarea
+                                rows={5}
+                                cols={5}
+                                {...formdata.config}
+                                value={formdata.value}
+                                style={{
+                                    boxShadow:
+                                        '#3c393f 0px 0px 0px 9999px inset',
+                                    ...styles,
+                                }}
+                                onBlur={event =>
+                                    change({ event, id, blur: true })
+                                }
+                                onChange={event => change({ event, id })}
+                                id={id}
+                                className={`${inputClass} default-form-text-area `}
+                            />
+                        </div>
+                        {showError()}
+                    </>
+                );
                 break;
             default:
                 template = <div></div>;
