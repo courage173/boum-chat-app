@@ -41,6 +41,7 @@ function FormField({
                                 style={{
                                     boxShadow:
                                         '#3c393f 0px 0px 0px 9999px inset',
+                                    color: '#fffff',
                                     ...styles,
                                 }}
                                 onBlur={event =>

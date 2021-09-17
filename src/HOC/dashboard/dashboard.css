@@ -21,7 +21,11 @@
     .side-bar-container {
         width: 85%;
         transform: translateX(-100%);
+        transition: 0.3s ease-in-out;
         z-index: 100;
+    }
+    .open-side-bar {
+        transform: translateX(0%);
     }
     .dashboard-right-side {
         margin-left: 0;

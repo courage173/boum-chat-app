@@ -1,13 +1,16 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import './sidebar.css';
+import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import DefaultSidebar from './DefaultSidebar';
-import user from '../../assets/images/user2.png';
+import userImage from '../../assets/images/user2.png';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ChannelSidebar from './ChannelSidebar';
 import CreateChannelModal from '../modals/createChannel/CreateChannel';
 
-const Sidebar = () => {
+const Sidebar = ({ user }) => {
     const [toggle, setToggle] = useState('');
     const [showModal, toggleModal] = useState(false);
     return (
@@ -33,12 +36,12 @@ const Sidebar = () => {
                     <div>
                         <img
                             alt="user image"
-                            src={user}
+                            src={userImage}
                             className="user-profile-image"
                         />
                     </div>
                     <div className="sidebar-footer-profile-name ">
-                        <span>Courage Kola</span>
+                        <span>{user?.name}</span>
                     </div>
                     <div>
                         <KeyboardArrowDownIcon />
@@ -49,4 +52,15 @@ const Sidebar = () => {
     );
 };
 
-export default Sidebar;
+Sidebar.propTypes = {
+    user: PropTypes.object,
+};
+const mapStateToProps = state => {
+    return {
+        user: state.user?.user,
+    };
+};
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({}, dispatch);
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);

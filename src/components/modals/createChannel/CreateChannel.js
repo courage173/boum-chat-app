@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import './createChannel.css';
 import { update } from '../../../utils/form/formAction';
 import FormField from '../../../utils/form/FormField';
 import Button from '../../../utils/button/Button';
-import PropTypes from 'prop-types';
 
 const CreateChannelModal = ({ toggleModal }) => {
     const [state, setState] = useState({
@@ -103,4 +105,14 @@ const CreateChannelModal = ({ toggleModal }) => {
 CreateChannelModal.propTypes = {
     toggleModal: PropTypes.func,
 };
-export default CreateChannelModal;
+const mapStateToProps = state => {
+    return {
+        user: state.user,
+        requesting: state.user.loginUser.requesting,
+        loginUser: state.user.loginUser,
+    };
+};
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({}, dispatch);
+};
+export default connect(mapStateToProps, mapDispatchToProps)(CreateChannelModal);
