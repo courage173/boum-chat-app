@@ -1,0 +1,13 @@
+.auth-header {
+    font-family: Noto Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 22px;
+    line-height: 25px;
+    letter-spacing: -0.035em;
+    color: #e0e0e0;
+}
+.signup-wrap {
+    margin-top: 10px;
+    font-size: 15px;
+}

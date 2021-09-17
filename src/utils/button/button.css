@@ -4,4 +4,5 @@ button {
     background: #2f80ed;
     border-radius: 8px;
     color: #fff;
+    cursor: pointer;
 }

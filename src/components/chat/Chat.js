@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ChatDashboard from '../../HOC/ChatDashboard';
+import ChatDashboard from '../../HOC/dashboard/ChatDashboard';
 import './chat.css';
 import ChatCard from './ChatCard';
 import { update } from '../../utils/form/formAction';
