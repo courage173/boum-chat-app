@@ -1,11 +1,21 @@
 import React, { useState } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import AddIcon from '@mui/icons-material/Add';
 import { update } from '../../utils/form/formAction';
 import FormField from '../../utils/form/FormField';
 import SearchIcon from '@mui/icons-material/Search';
 import PropTypes from 'prop-types';
+import { joinChannel, navigateToChannel } from '../../redux/actions/channel';
 
-const DefaultSidebar = ({ handleClick, toggleModal }) => {
+const DefaultSidebar = ({
+    handleClick,
+    toggleModal,
+    channel,
+    joinChannel,
+    user,
+    navigateToChannel,
+}) => {
     const [state, setState] = useState({
         formdata: {
             search: {
@@ -46,12 +56,18 @@ const DefaultSidebar = ({ handleClick, toggleModal }) => {
         }
         return text.toUpperCase();
     };
-    const channels = [
-        'Front End and to',
-        'Random',
-        'Back-end',
-        'Cats troll Dog',
-    ];
+    const handleJoin = (channelId, users, channel) => {
+        const userId = user?.user._id;
+        //check if user is already in channel
+        const inChannel = users.some(user => user?.userId?._id === userId);
+        if (inChannel) {
+            navigateToChannel(channel);
+        } else {
+            joinChannel(channelId);
+        }
+        handleClick('channel');
+    };
+    const channelList = channel?.channels?.channels || [];
     return (
         <div>
             <div className="top-navigation-wrap">
@@ -83,16 +99,23 @@ const DefaultSidebar = ({ handleClick, toggleModal }) => {
                 />
             </div>
             <div style={{ marginTop: 30 }}>
-                {channels.map(channel => (
-                    <div className="channel-list" key={channel}>
+                {channelList.map(channel => (
+                    <div
+                        className="channel-list"
+                        key={channel._id}
+                        style={{ cursor: 'pointer' }}
+                        onClick={() =>
+                            handleJoin(channel._id, channel.users, channel)
+                        }
+                    >
                         <div
                             className="channel-badge"
                             style={{ textTransform: 'capitalize' }}
                         >
-                            <span>{getBadge(channel)}</span>
+                            <span>{getBadge(channel.name)}</span>
                         </div>
                         <div className="channel-name-text">
-                            <span>{channel}</span>
+                            <span>{channel.name}</span>
                         </div>
                     </div>
                 ))}
@@ -104,5 +127,19 @@ const DefaultSidebar = ({ handleClick, toggleModal }) => {
 DefaultSidebar.propTypes = {
     handleClick: PropTypes.func,
     toggleModal: PropTypes.func,
+    channel: PropTypes.object,
+    joinChannel: PropTypes.func,
+    user: PropTypes.object,
+    navigateToChannel: PropTypes.func,
 };
-export default DefaultSidebar;
+const mapStateToProps = state => {
+    return {
+        user: state.user,
+        requesting: state.channel.createChannel?.requesting,
+        channel: state.channel,
+    };
+};
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({ joinChannel, navigateToChannel }, dispatch);
+};
+export default connect(mapStateToProps, mapDispatchToProps)(DefaultSidebar);

@@ -3,11 +3,21 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import './createChannel.css';
-import { update } from '../../../utils/form/formAction';
+import {
+    update,
+    generateData,
+    isFormValid,
+} from '../../../utils/form/formAction';
 import FormField from '../../../utils/form/FormField';
 import Button from '../../../utils/button/Button';
+import { createChannel } from '../../../redux/actions/channel';
 
-const CreateChannelModal = ({ toggleModal }) => {
+const CreateChannelModal = ({
+    toggleModal,
+    createChannel,
+    requesting,
+    channel,
+}) => {
     const [state, setState] = useState({
         formdata: {
             name: {
@@ -56,6 +66,15 @@ const CreateChannelModal = ({ toggleModal }) => {
             formdata: newFormdata,
         });
     };
+    const handleSubmit = () => {
+        const valid = isFormValid(state.formdata);
+        if (valid) {
+            const data = generateData(state.formdata);
+            createChannel(data).then(() => {
+                toggleModal(false);
+            });
+        }
+    };
     return (
         <div
             className="modal-wrapper"
@@ -89,13 +108,16 @@ const CreateChannelModal = ({ toggleModal }) => {
                 </div>
                 <div className="create-channel-btn-wrap">
                     <Button
-                        title="Save"
-                        runAction={() => {}}
+                        title={requesting ? 'Loading' : 'Save'}
+                        runAction={handleSubmit}
                         style={{
                             width: '80px',
                             height: '35px',
                         }}
                     />
+                </div>
+                <div style={{ color: 'red' }}>
+                    <span>{channel.error}</span>
                 </div>
             </div>
         </div>
@@ -104,15 +126,18 @@ const CreateChannelModal = ({ toggleModal }) => {
 
 CreateChannelModal.propTypes = {
     toggleModal: PropTypes.func,
+    createChannel: PropTypes.func,
+    requesting: PropTypes.bool,
+    channel: PropTypes.object,
 };
 const mapStateToProps = state => {
     return {
         user: state.user,
-        requesting: state.user.loginUser.requesting,
-        loginUser: state.user.loginUser,
+        requesting: state.channel.createChannel?.requesting,
+        channel: state.channel.createChannel,
     };
 };
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({}, dispatch);
+    return bindActionCreators({ createChannel }, dispatch);
 };
 export default connect(mapStateToProps, mapDispatchToProps)(CreateChannelModal);

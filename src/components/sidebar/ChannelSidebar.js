@@ -1,10 +1,12 @@
 import React from 'react';
-import user from '../../assets/images/user2.png';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import userImg from '../../assets/images/user2.png';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import PropTypes from 'prop-types';
 
-const ChannelSidebar = ({ handleClick }) => {
-    const users = ['courage kola', 'wole', 'Efosa', 'Joe Cole'];
+const ChannelSidebar = ({ handleClick, channel }) => {
+    const userList = channel.channel.users || [];
     return (
         <div>
             <div
@@ -37,17 +39,17 @@ const ChannelSidebar = ({ handleClick }) => {
                 </div>
             </div>
             <div style={{ marginTop: 30 }}>
-                {users.map(channel => (
-                    <div className="channel-list" key={channel}>
+                {userList.map(user => (
+                    <div className="channel-list" key={user?.userId?._id}>
                         <div className="channel-badge">
                             <img
                                 alt="user image"
-                                src={user}
+                                src={userImg}
                                 className="user-profile-image"
                             />
                         </div>
                         <div className="user-name-text">
-                            <span>{channel}</span>
+                            <span>{user?.userId?.name}</span>
                         </div>
                     </div>
                 ))}
@@ -58,5 +60,16 @@ const ChannelSidebar = ({ handleClick }) => {
 
 ChannelSidebar.propTypes = {
     handleClick: PropTypes.func,
+    channel: PropTypes.object,
 };
-export default ChannelSidebar;
+
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({}, dispatch);
+};
+const mapStateToProps = state => {
+    return {
+        toggleSidebar: state.ui.toggleSidebar,
+        channel: state.channel.activeChannel,
+    };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(ChannelSidebar);

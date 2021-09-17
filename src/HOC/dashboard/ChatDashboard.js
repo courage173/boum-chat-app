@@ -6,11 +6,13 @@ import Sidebar from '../../components/sidebar/Sidebar';
 import './dashboard.css';
 import Header from '../../components/header/Header';
 import { getUser } from '../../redux/actions/user';
+import { getChannels } from '../../redux/actions/channel';
 
-const ChatDashboard = ({ children, toggleSidebar, getUser }) => {
+const ChatDashboard = ({ children, toggleSidebar, getUser, getChannels }) => {
     useEffect(() => {
         getUser();
-    });
+        getChannels();
+    }, []);
     return (
         <div className="dashboard-main-wrap">
             <div
@@ -32,12 +34,14 @@ ChatDashboard.propTypes = {
     children: PropTypes.element,
     toggleSidebar: PropTypes.bool,
     getUser: PropTypes.func,
+    getChannels: PropTypes.func,
 };
 
 const mapDispatchToProps = dispatch => {
     return bindActionCreators(
         {
             getUser,
+            getChannels,
         },
         dispatch
     );
