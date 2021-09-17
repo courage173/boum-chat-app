@@ -6,10 +6,12 @@ import LoginPage from './pages/Login';
 import RegisterPage from './pages/Register';
 import { history } from './redux/store';
 import AuthRoute from './HOC/AuthRoute';
+import Socket from './socket';
 
 function App() {
     return (
         <div style={{ height: '100%' }}>
+            <Socket />
             <Router history={history}>
                 <Switch>
                     <Route path="/login" component={LoginPage} />

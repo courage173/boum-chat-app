@@ -28,6 +28,9 @@ export const User = {
     clear() {
         localStorage.clear();
     },
+    setUserId(id) {
+        localStorage.setItem('id', id);
+    },
 
     removeUserId() {
         localStorage.removeItem('id');
