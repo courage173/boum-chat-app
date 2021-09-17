@@ -1,0 +1,93 @@
+.chat-container {
+    background: #252329;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.chart-card-wrap {
+    display: flex;
+    padding: 0 60px;
+    margin: 30px 0;
+}
+
+.chart-card-wrap img {
+    width: 42px;
+    height: 42px;
+    border-radius: 7px;
+}
+.chart-card-message-container {
+    margin-left: 10px;
+}
+.chart-card-text-wrap {
+    display: flex;
+    align-items: center;
+}
+.chart-card-text-name {
+    font-family: Noto Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 25px;
+    letter-spacing: -0.035em;
+    color: #828282;
+}
+.chart-card-text-date {
+    font-family: Noto Sans;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 19px;
+    letter-spacing: -0.035em;
+    color: #828282;
+    margin-left: 14px;
+}
+.chart-message {
+    font-family: Noto Sans;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 25px;
+    letter-spacing: -0.035em;
+
+    color: #e0e0e0;
+}
+
+.message-box-container {
+    padding: 60px;
+}
+.message-box {
+    display: flex;
+    width: 100%;
+    background-color: rgb(60 57 63);
+    padding: 5px;
+    border-radius: 12px;
+}
+.message-text-wrap {
+    width: 95%;
+}
+.message-box button {
+    width: 40px;
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 768px) {
+    .chart-card-wrap {
+        padding: 0 10px;
+    }
+    .chart-message {
+        margin-top: 20px;
+    }
+    .message-text-wrap {
+        width: 92%;
+    }
+    .message-box {
+        padding: 5px 5px;
+        border-radius: 12px;
+    }
+    .message-box-container {
+        padding: 10px;
+    }
+}
