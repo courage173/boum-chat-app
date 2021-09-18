@@ -253,3 +253,57 @@ export function getChannelMessages(channelId) {
         return promise;
     };
 }
+//search channels
+export function searchChannelError(error) {
+    return {
+        type: types.SEARCH_CHANNELS_FAILURE,
+        payload: error,
+    };
+}
+
+export function searchChannelSuccess(payload) {
+    return {
+        type: types.SEARCH_CHANNELS_SUCCESS,
+        payload,
+    };
+}
+
+export function searchChannelRequest() {
+    return {
+        type: types.SEARCH_CHANNELS_REQUEST,
+    };
+}
+
+export function resetSearch() {
+    return {
+        type: types.RESET_SEARCH,
+    };
+}
+
+// Calls the API to get messages
+export function searchChannel(search) {
+    return dispatch => {
+        const promise = getApi(`channel/search?search=${search}`);
+        dispatch(searchChannelRequest());
+        promise.then(
+            function (payload) {
+                dispatch(searchChannelSuccess(payload.data));
+            },
+            function (error) {
+                if (error && error.response && error.response.data)
+                    error = error.response.data;
+                if (error && error.data) {
+                    error = error.data;
+                }
+                if (error && error.message) {
+                    error = error.message;
+                } else {
+                    error = 'Network Error';
+                }
+                dispatch(searchChannelError(errors(error)));
+            }
+        );
+
+        return promise;
+    };
+}

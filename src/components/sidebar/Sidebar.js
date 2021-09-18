@@ -10,12 +10,10 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ChannelSidebar from './ChannelSidebar';
 import CreateChannelModal from '../modals/createChannel/CreateChannel';
 
-const Sidebar = ({ user }) => {
+const Sidebar = ({ user, toggleModal }) => {
     const [toggle, setToggle] = useState('');
-    const [showModal, toggleModal] = useState(false);
     return (
         <>
-            {showModal && <CreateChannelModal toggleModal={toggleModal} />}
             <div
                 style={{
                     display: 'flex',
@@ -60,6 +58,7 @@ const Sidebar = ({ user }) => {
 
 Sidebar.propTypes = {
     user: PropTypes.object,
+    toggleModal: PropTypes.func,
 };
 const mapStateToProps = state => {
     return {

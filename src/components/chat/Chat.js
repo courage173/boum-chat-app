@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -16,6 +16,14 @@ import SendIcon from '@mui/icons-material/Send';
 import { sendMessage } from '../../redux/actions/channel';
 
 const Chat = ({ channel, sendMessage }) => {
+    const messageRef = useRef(null);
+    const scrollTobottom = () => {
+        messageRef.current?.scrollIntoView({ behaviour: 'smooth' });
+    };
+    const messages = channel?.messages;
+    useEffect(() => {
+        scrollTobottom();
+    }, [messages]);
     useEffect(() => {
         window.addEventListener('keydown', handleKeyBoard);
 
@@ -69,43 +77,51 @@ const Chat = ({ channel, sendMessage }) => {
             setState({ formdata: newField });
         }
     };
+
     const handleMessages = (messages = []) => {
-        return messages.map(message => {
-            if (message.type === 'user') {
-                return (
-                    <div
-                        style={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            width: '100%',
-                        }}
-                    >
-                        <span style={{ paddingTop: 10 }}>
-                            Welcome {message.name}
-                        </span>
-                    </div>
-                );
-            } else if (message.type === 'user_joined') {
-                return (
-                    <div
-                        style={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            width: '100%',
-                        }}
-                    >
-                        <span style={{ paddingTop: 10 }}>{message.text}</span>
-                    </div>
-                );
-            } else {
-                return <ChatCard key={message._id} data={message} />;
-            }
-        });
+        return (
+            <>
+                {messages.map(message => {
+                    if (message.type === 'user') {
+                        return (
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    width: '100%',
+                                }}
+                            >
+                                <span style={{ paddingTop: 10 }}>
+                                    Welcome {message.name}
+                                </span>
+                            </div>
+                        );
+                    } else if (message.type === 'user_joined') {
+                        return (
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    width: '100%',
+                                }}
+                            >
+                                <span style={{ paddingTop: 10 }}>
+                                    {message.text}
+                                </span>
+                            </div>
+                        );
+                    } else {
+                        return <ChatCard key={message._id} data={message} />;
+                    }
+                })}
+                <div ref={messageRef}></div>
+            </>
+        );
     };
     return (
         <ChatDashboard>
             <div className="chat-container">
-                <div style={{ marginTop: 50 }}>
+                <div className="chat-container-wrap">
                     {channel?.channel?.name ? (
                         channel?.messages?.length === 0 ? (
                             <div
