@@ -31,8 +31,13 @@
 .channel-list {
     display: flex;
     align-items: center;
-    padding: 0 20px;
+    padding: 5px 20px;
     margin: 20px 0;
+    background: transparent;
+    width: 100%;
+}
+.channel-list:hover {
+    background: #3c393f;
 }
 .channel-badge {
     background: #252329;
@@ -42,6 +47,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.channel-list-container {
+    overflow-y: scroll;
+    height: 62%;
+    padding: 0 20px;
 }
 .channel-name-text {
     font-family: Noto Sans;
@@ -65,6 +75,8 @@
     align-items: center;
     justify-content: space-between;
     margin-bottom: 10px;
+    position: absolute;
+    bottom: 0;
 }
 .sidebar-footer-profile-name {
     font-family: Noto Sans;
@@ -106,4 +118,11 @@
     letter-spacing: -0.035em;
     color: #828282;
     margin-left: 10px;
+}
+
+@media only screen and (max-width: 768px) {
+    .channel-list-container {
+        overflow-y: scroll;
+        height: 49%;
+    }
 }

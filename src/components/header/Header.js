@@ -7,7 +7,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import MenuIcon from '@mui/icons-material/Menu';
 import { toggleSideBar } from '../../redux/actions/ui';
 
-const Header = ({ toggleSideBar, channel }) => {
+const Header = ({ toggleSideBar, channel, toggleSidebar }) => {
     return (
         <div className="header-container ">
             <div className="header-title-wrap ">
@@ -16,9 +16,14 @@ const Header = ({ toggleSideBar, channel }) => {
                 </div>
                 <span>{channel.name ? channel.name : 'Welcome Channel'}</span>
             </div>
-            <div className="close-button-wrap " onClick={() => toggleSideBar()}>
-                <CloseIcon />
-            </div>
+            {toggleSidebar && (
+                <div
+                    className="close-button-wrap "
+                    onClick={() => toggleSideBar()}
+                >
+                    <CloseIcon />
+                </div>
+            )}
         </div>
     );
 };
@@ -37,10 +42,12 @@ const mapStateToProps = state => {
         user: state.user,
         requesting: state.channel.createChannel?.requesting,
         channel: state.channel.activeChannel?.channel,
+        toggleSidebar: state.ui.toggleSidebar,
     };
 };
 Header.propTypes = {
     toggleSideBar: PropTypes.func.isRequired,
     channel: PropTypes.object,
+    toggleSidebar: PropTypes.bool,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

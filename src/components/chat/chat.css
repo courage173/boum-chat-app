@@ -89,7 +89,7 @@
         padding: 0 10px;
     }
     .chart-message {
-        margin-top: 20px;
+        margin-top: 6px;
     }
     .message-text-wrap {
         width: 92%;
@@ -100,5 +100,9 @@
     }
     .message-box-container {
         padding: 10px;
+        width: 91%;
+    }
+    .chat-container-wrap {
+        height: 82%;
     }
 }

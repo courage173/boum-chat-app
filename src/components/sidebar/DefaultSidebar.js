@@ -117,9 +117,9 @@ const DefaultSidebar = ({
                     }}
                 />
             </div>
-            <div style={{ marginTop: 30 }}>
+            <div style={{ marginTop: 30 }} className="channel-list-container">
                 {channelList.map(channel => (
-                    <div
+                    <button
                         className="channel-list"
                         key={channel._id}
                         style={{ cursor: 'pointer' }}
@@ -136,7 +136,7 @@ const DefaultSidebar = ({
                         <div className="channel-name-text">
                             <span>{channel.name}</span>
                         </div>
-                    </div>
+                    </button>
                 ))}
             </div>
         </div>

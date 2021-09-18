@@ -112,9 +112,13 @@ export function joinChannelNotification(error) {
 }
 
 export function JoinChannelUserNotification(payload) {
+    const { channel, ...data } = payload;
     return {
         type: types.JOIN_CHANNEL_USER_NOTIFICATION,
-        payload,
+        payload: {
+            channel,
+            data,
+        },
     };
 }
 export function navigateToChannel(payload) {
@@ -128,6 +132,11 @@ export function navigateToChannel(payload) {
 export function JoinChannelRequest() {
     return {
         type: types.JOIN_CHANNEL_REQUEST,
+    };
+}
+export function JoinChannelReset() {
+    return {
+        type: types.JOIN_CHANNEL_RESET,
     };
 }
 

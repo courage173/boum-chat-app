@@ -35,7 +35,7 @@ const ChannelSidebar = ({ handleClick, channel }) => {
                     <span>{activeChanel.description}</span>
                 </div>
             </div>
-            <div style={{ marginTop: 30 }}>
+            <div style={{ marginTop: 30 }} className="channel-list-container">
                 {userList.map(user => (
                     <div className="channel-list" key={user?.userId?._id}>
                         <div className="channel-badge">
