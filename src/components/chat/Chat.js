@@ -1,15 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ChatDashboard from '../../HOC/dashboard/ChatDashboard';
 import './chat.css';
 import ChatCard from './ChatCard';
-import { update } from '../../utils/form/formAction';
+import {
+    update,
+    generateData,
+    isFormValid,
+    resetFields,
+} from '../../utils/form/formAction';
 import FormField from '../../utils/form/FormField';
 import SendIcon from '@mui/icons-material/Send';
+import { sendMessage } from '../../redux/actions/channel';
 
-const Chat = ({ channel }) => {
+const Chat = ({ channel, sendMessage }) => {
+    useEffect(() => {
+        window.addEventListener('keydown', handleKeyBoard);
+
+        return () => window.removeEventListener('keydown', handleKeyBoard);
+    });
+    const handleKeyBoard = e => {
+        switch (e.key) {
+            case 'Enter':
+                return document.getElementById('submit-message').click();
+            default:
+                return false;
+        }
+    };
     const [state, setState] = useState({
         formdata: {
             message: {
@@ -40,6 +59,16 @@ const Chat = ({ channel }) => {
             formdata: newFormdata,
         });
     };
+    const handleMessage = () => {
+        const isValid = isFormValid(state.formdata);
+        const channelId = channel?.channel?._id;
+        if (isValid && channelId) {
+            const data = generateData(state.formdata);
+            sendMessage(channelId, data);
+            const newField = resetFields(state.formdata);
+            setState({ formdata: newField });
+        }
+    };
     const handleMessages = (messages = []) => {
         return messages.map(message => {
             if (message.type === 'user') {
@@ -65,9 +94,7 @@ const Chat = ({ channel }) => {
                             width: '100%',
                         }}
                     >
-                        <span style={{ paddingTop: 10 }}>
-                            {message.name} Joine the chat
-                        </span>
+                        <span style={{ paddingTop: 10 }}>{message.text}</span>
                     </div>
                 );
             } else {
@@ -109,22 +136,24 @@ const Chat = ({ channel }) => {
                         </div>
                     )}
                 </div>
-                <div className="message-box-container">
-                    <div className="message-box">
-                        <FormField
-                            id={'message'}
-                            formdata={state.formdata.message}
-                            change={element => updateForm(element)}
-                            styles={{
-                                color: '#fff',
-                            }}
-                            altStyle="message-text-wrap"
-                        />
-                        <button>
-                            <SendIcon />
-                        </button>
+                {channel?.channel?.name && (
+                    <div className="message-box-container">
+                        <div className="message-box">
+                            <FormField
+                                id={'message'}
+                                formdata={state.formdata.message}
+                                change={element => updateForm(element)}
+                                styles={{
+                                    color: '#fff',
+                                }}
+                                altStyle="message-text-wrap"
+                            />
+                            <button onClick={handleMessage} id="submit-message">
+                                <SendIcon />
+                            </button>
+                        </div>
                     </div>
-                </div>
+                )}
             </div>
         </ChatDashboard>
     );
@@ -132,6 +161,7 @@ const Chat = ({ channel }) => {
 
 Chat.propTypes = {
     channel: PropTypes.object,
+    sendMessage: PropTypes.func,
 };
 const mapStateToProps = state => {
     return {
@@ -140,6 +170,6 @@ const mapStateToProps = state => {
     };
 };
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({}, dispatch);
+    return bindActionCreators({ sendMessage }, dispatch);
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Chat);

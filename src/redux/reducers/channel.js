@@ -10,6 +10,11 @@ const initialState = {
         error: null,
         success: false,
     },
+    getMessage: {
+        requesting: false,
+        error: null,
+        success: false,
+    },
     getChannel: {
         requesting: false,
         error: null,
@@ -42,12 +47,49 @@ export default (state = initialState, action) => {
                 },
                 channels: {
                     ...state.channels,
-                    channels: state.channels?.channels.concat(action.payload),
+                    channels: state.channels?.channels.unshift(action.payload),
                 },
             });
         case types.CREATE_CHANNEL_FAILURE:
             return Object.assign({}, state, {
                 createChannel: {
+                    requesting: false,
+                    error: action.payload,
+                    success: false,
+                },
+            });
+        case types.GET_CHANNEL_MESSAGES_REQUEST:
+            return Object.assign({}, state, {
+                getMessage: {
+                    requesting: true,
+                    error: null,
+                    success: false,
+                },
+            });
+        case types.GET_CHANNEL_MESSAGES_SUCCESS:
+            return Object.assign({}, state, {
+                getMessage: {
+                    requesting: false,
+                    error: null,
+                    success: true,
+                },
+                activeChannel: {
+                    ...state.activeChannel,
+                    messages: action.payload.messages,
+                },
+            });
+        case types.ADD_MESSAGE_TO_STORE:
+            return Object.assign({}, state, {
+                activeChannel: {
+                    ...state.activeChannel,
+                    messages: state.activeChannel.messages.concat(
+                        action.payload
+                    ),
+                },
+            });
+        case types.GET_CHANNEL_MESSAGES_FAILURE:
+            return Object.assign({}, state, {
+                getMessage: {
                     requesting: false,
                     error: action.payload,
                     success: false,
@@ -110,6 +152,7 @@ export default (state = initialState, action) => {
                 activeChannel: {
                     ...state.activeChannel,
                     channel: action.payload,
+                    messages: [],
                 },
             });
         case types.GET_CHANNEL_FAILURE:

@@ -43,7 +43,13 @@ const Sidebar = ({ user }) => {
                     <div className="sidebar-footer-profile-name ">
                         <span>{user?.name}</span>
                     </div>
-                    <div>
+                    <div
+                        style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        }}
+                    >
                         <KeyboardArrowDownIcon />
                     </div>
                 </div>
