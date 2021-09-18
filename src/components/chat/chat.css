@@ -5,12 +5,20 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    position: relative;
 }
 
 .chart-card-wrap {
     display: flex;
     padding: 0 60px;
     margin: 30px 0;
+}
+.chat-container-wrap {
+    padding-top: 50px;
+    height: 85%;
+    overflow-y: scroll;
+    position: absolute;
+    width: 100%;
 }
 
 .chart-card-wrap img {
@@ -56,8 +64,10 @@
 }
 
 .message-box-container {
-    padding: 60px;
-    padding-top: 0px;
+    position: absolute;
+    width: 85%;
+    bottom: 18px;
+    padding: 0px 60px;
 }
 .message-box {
     display: flex;

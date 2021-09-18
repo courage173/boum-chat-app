@@ -20,6 +20,14 @@ const initialState = {
         error: null,
         success: false,
     },
+    searchChannel: {
+        requesting: false,
+        error: null,
+        success: false,
+    },
+    search: {
+        channels: [],
+    },
     joinChannelRequest: false,
     channels: [],
     activeChannel: {
@@ -39,6 +47,8 @@ export default (state = initialState, action) => {
                 },
             });
         case types.CREATE_CHANNEL_SUCCESS:
+            // eslint-disable-next-line no-console
+            console.log(action.payload, state.channels);
             return Object.assign({}, state, {
                 createChannel: {
                     requesting: false,
@@ -47,7 +57,7 @@ export default (state = initialState, action) => {
                 },
                 channels: {
                     ...state.channels,
-                    channels: state.channels?.channels.unshift(action.payload),
+                    channels: [action.payload, ...state.channels?.channels],
                 },
             });
         case types.CREATE_CHANNEL_FAILURE:
@@ -141,7 +151,7 @@ export default (state = initialState, action) => {
                     channel: state.channels?.channels.find(
                         channel => channel._id === action.payload.channelId
                     ),
-                    messages: state.activeChannel.messages.concat({
+                    messages: [].concat({
                         ...action.payload,
                         type: 'user',
                     }),
@@ -181,6 +191,37 @@ export default (state = initialState, action) => {
                 activeChannel: {
                     ...state.activeChannel,
                     channel: action.payload,
+                },
+            });
+        case types.SEARCH_CHANNELS_REQUEST:
+            return Object.assign({}, state, {
+                searchChannel: {
+                    requesting: true,
+                    error: null,
+                    success: false,
+                },
+            });
+        case types.SEARCH_CHANNELS_SUCCESS:
+            return Object.assign({}, state, {
+                searchChannel: {
+                    requesting: false,
+                    error: null,
+                    success: true,
+                },
+                search: action.payload,
+            });
+        case types.SEARCH_CHANNELS_FAILURE:
+            return Object.assign({}, state, {
+                searchChannel: {
+                    requesting: true,
+                    error: action.payload,
+                    success: false,
+                },
+            });
+        case types.RESET_SEARCH:
+            return Object.assign({}, state, {
+                search: {
+                    channels: [],
                 },
             });
         default:

@@ -8,6 +8,7 @@
     background: #3c393f;
     align-items: center;
     padding: 5px;
+    border-radius: 7px;
 }
 .default-form {
     box-shadow: #828282 0px 0px 0px 9999px inset;

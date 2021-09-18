@@ -105,10 +105,11 @@ const Login = ({ loginUser, requesting }) => {
                         style={{
                             width: '100%',
                             height: 40,
-                            borderRadius: 0,
+
                             fontSize: 16,
                             fontweight: '600',
                             color: '#fff',
+                            borderRadius: 7,
                         }}
                         title={requesting ? 'loading' : 'Sign in'}
                         runAction={handleLogin}

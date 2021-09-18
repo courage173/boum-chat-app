@@ -10,13 +10,14 @@ import {
 } from '../../../utils/form/formAction';
 import FormField from '../../../utils/form/FormField';
 import Button from '../../../utils/button/Button';
-import { createChannel } from '../../../redux/actions/channel';
+import { createChannel, joinChannel } from '../../../redux/actions/channel';
 
 const CreateChannelModal = ({
     toggleModal,
     createChannel,
     requesting,
     channel,
+    joinChannel,
 }) => {
     const [state, setState] = useState({
         formdata: {
@@ -70,7 +71,9 @@ const CreateChannelModal = ({
         const valid = isFormValid(state.formdata);
         if (valid) {
             const data = generateData(state.formdata);
-            createChannel(data).then(() => {
+            createChannel(data).then(data => {
+                const channelId = data.data?._id;
+                joinChannel(channelId);
                 toggleModal(false);
             });
         }
@@ -129,6 +132,7 @@ CreateChannelModal.propTypes = {
     createChannel: PropTypes.func,
     requesting: PropTypes.bool,
     channel: PropTypes.object,
+    joinChannel: PropTypes.func,
 };
 const mapStateToProps = state => {
     return {
@@ -138,6 +142,6 @@ const mapStateToProps = state => {
     };
 };
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ createChannel }, dispatch);
+    return bindActionCreators({ createChannel, joinChannel }, dispatch);
 };
 export default connect(mapStateToProps, mapDispatchToProps)(CreateChannelModal);

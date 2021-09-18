@@ -10,6 +10,8 @@ import {
     joinChannel,
     navigateToChannel,
     getChannelMessages,
+    searchChannel,
+    resetSearch,
 } from '../../redux/actions/channel';
 
 const DefaultSidebar = ({
@@ -20,6 +22,9 @@ const DefaultSidebar = ({
     user,
     navigateToChannel,
     getChannelMessages,
+    searchChannel,
+    searchList,
+    resetSearch,
 }) => {
     const [state, setState] = useState({
         formdata: {
@@ -44,13 +49,20 @@ const DefaultSidebar = ({
         },
     });
     const updateForm = element => {
-        setState({ loginErrorMessage: '', message: '' });
+        const value = element.event.target.value;
+        if (value.trim().length > 1) {
+            searchChannel(value);
+        } else {
+            resetSearch();
+        }
+
         const newFormdata = update(element, state.formdata, '');
         setState({
             formError: false,
             formdata: newFormdata,
         });
     };
+
     const getBadge = name => {
         const arr = name.split(' ');
         let text = '';
@@ -73,7 +85,8 @@ const DefaultSidebar = ({
         }
         handleClick('channel');
     };
-    const channelList = channel?.channels?.channels || [];
+    const channelList =
+        searchList.length > 0 ? searchList : channel?.channels?.channels || [];
     return (
         <div>
             <div className="top-navigation-wrap">
@@ -138,17 +151,27 @@ DefaultSidebar.propTypes = {
     user: PropTypes.object,
     navigateToChannel: PropTypes.func,
     getChannelMessages: PropTypes.func,
+    searchChannel: PropTypes.func,
+    searchList: PropTypes.array,
+    resetSearch: PropTypes.func,
 };
 const mapStateToProps = state => {
     return {
         user: state.user,
         requesting: state.channel.createChannel?.requesting,
         channel: state.channel,
+        searchList: state.channel.search.channels,
     };
 };
 const mapDispatchToProps = dispatch => {
     return bindActionCreators(
-        { joinChannel, navigateToChannel, getChannelMessages },
+        {
+            joinChannel,
+            navigateToChannel,
+            getChannelMessages,
+            searchChannel,
+            resetSearch,
+        },
         dispatch
     );
 };
