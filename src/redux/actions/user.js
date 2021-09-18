@@ -15,7 +15,7 @@ export function registerSuccess(payload) {
     User.setAccessToken(accessToken);
     User.setName(payload.name);
     User.setEmail(payload.email);
-    User.setUserId(payload._id);
+    User.setUserId(payload.id);
     return {
         type: types.REGISTER_SUCCESS,
         payload,
@@ -68,6 +68,7 @@ export function loginSuccess(payload) {
     User.setAccessToken(accessToken);
     User.setName(payload.name);
     User.setEmail(payload.email);
+    User.setUserId(payload.id);
     return {
         type: types.LOGIN_SUCCESS,
         payload,

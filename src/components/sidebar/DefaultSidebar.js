@@ -6,7 +6,11 @@ import { update } from '../../utils/form/formAction';
 import FormField from '../../utils/form/FormField';
 import SearchIcon from '@mui/icons-material/Search';
 import PropTypes from 'prop-types';
-import { joinChannel, navigateToChannel } from '../../redux/actions/channel';
+import {
+    joinChannel,
+    navigateToChannel,
+    getChannelMessages,
+} from '../../redux/actions/channel';
 
 const DefaultSidebar = ({
     handleClick,
@@ -15,6 +19,7 @@ const DefaultSidebar = ({
     joinChannel,
     user,
     navigateToChannel,
+    getChannelMessages,
 }) => {
     const [state, setState] = useState({
         formdata: {
@@ -62,6 +67,7 @@ const DefaultSidebar = ({
         const inChannel = users.some(user => user?.userId?._id === userId);
         if (inChannel) {
             navigateToChannel(channel);
+            getChannelMessages(channelId);
         } else {
             joinChannel(channelId);
         }
@@ -131,6 +137,7 @@ DefaultSidebar.propTypes = {
     joinChannel: PropTypes.func,
     user: PropTypes.object,
     navigateToChannel: PropTypes.func,
+    getChannelMessages: PropTypes.func,
 };
 const mapStateToProps = state => {
     return {
@@ -140,6 +147,9 @@ const mapStateToProps = state => {
     };
 };
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ joinChannel, navigateToChannel }, dispatch);
+    return bindActionCreators(
+        { joinChannel, navigateToChannel, getChannelMessages },
+        dispatch
+    );
 };
 export default connect(mapStateToProps, mapDispatchToProps)(DefaultSidebar);

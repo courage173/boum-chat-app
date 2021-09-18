@@ -12,6 +12,9 @@ export const User = {
     getName() {
         return localStorage.getItem('name');
     },
+    getUserId() {
+        return localStorage.getItem('id');
+    },
 
     setName(name) {
         localStorage.setItem('name', name);

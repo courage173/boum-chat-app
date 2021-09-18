@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 
 const ChannelSidebar = ({ handleClick, channel }) => {
     const userList = channel.channel.users || [];
+    const activeChanel = channel.channel || {};
     return (
         <div>
             <div
@@ -28,14 +29,10 @@ const ChannelSidebar = ({ handleClick, channel }) => {
             </div>
             <div style={{ padding: '0 20px', marginTop: 20 }}>
                 <div className="sidebar-channel-name">
-                    <span>Frontend-Developers</span>
+                    <span>{activeChanel.name}</span>
                 </div>
                 <div className="sidebar-channel-description ">
-                    <span>
-                        Pellentesque sagittis elit enim, sit amet ultrices
-                        tellus accumsan quis. In gravida mollis purus, at
-                        interdum arcu tempor non
-                    </span>
+                    <span>{activeChanel.description}</span>
                 </div>
             </div>
             <div style={{ marginTop: 30 }}>

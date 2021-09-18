@@ -1,48 +1,55 @@
 import React, { useEffect } from 'react';
-import Client from 'socket.io-client';
-import { User } from './config';
+import { PropTypes } from 'prop-types';
+// import Client from 'socket.io-client';
+// import { User } from './config';
 import store from './redux/store';
-
-const socketAPIUrl =
-    process.env.REACT_APP_SOCKET_URL || 'http://localhost:3009';
-// import store from './store';
 import {
     JoinChannelUserNotification,
     joinChannelNotification,
     getChannel,
+    addMessageToStore,
 } from './redux/actions/channel';
+import { User } from './config';
 
-export const socket = new Client(socketAPIUrl, {
-    query: { token: User.getAccessToken() },
-});
+export let socketIo;
 
-function Socket() {
+function Socket({ socket }) {
     useEffect(() => {
-        socket.on('connect', () => {
+        socketIo = socket;
+        const connectionListener = () => {
             // eslint-disable-next-line no-console
             console.log('connected to server');
-
-            socket.on('welcome_notification', payload => {
-                store.dispatch(JoinChannelUserNotification(payload));
-                store.dispatch(getChannel(payload.channelId));
-            });
-            socket.on('notification', payload => {
-                // eslint-disable-next-line no-console
-                console.log(payload, 'notification');
-                store.dispatch(joinChannelNotification(payload));
-            });
-
-            // socket.on('remove-offline-user', id => {
-            //     store.dispatch(removeOfflineUser(id));
-            // });
-            // socket.on('new-message', data => {
-            //     store.dispatch(setNewMessage(data.message, data.sender));
-            // });
-        });
-        return socket.emit('end');
-    });
-
-    return <div></div>;
+        };
+        const welcomeListener = payload => {
+            store.dispatch(JoinChannelUserNotification(payload));
+            store.dispatch(getChannel(payload.channelId));
+        };
+        const notificationListener = payload => {
+            store.dispatch(joinChannelNotification(payload));
+            store.dispatch(getChannel(payload.channelId));
+        };
+        const messageListener = payload => {
+            // eslint-disable-next-line no-console
+            console.log(User.getUserId() !== payload.userId);
+            if (User.getUserId() !== payload.userId) {
+                store.dispatch(addMessageToStore(payload));
+            }
+        };
+        socket.on('connect', connectionListener);
+        socket.on('welcome_notification', welcomeListener);
+        socket.on('notification', notificationListener);
+        socket.on('newMessage', messageListener);
+        return () => {
+            socket.off('connect', connectionListener);
+            socket.off('welcome_notification', welcomeListener);
+            socket.off('notification', notificationListener);
+            socket.off('newMessage', messageListener);
+        };
+    }, [socket]);
+    return <></>;
 }
 
+Socket.propTypes = {
+    socket: PropTypes.object,
+};
 export default Socket;

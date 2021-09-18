@@ -14,7 +14,7 @@ const Header = ({ toggleSideBar, channel }) => {
                 <div className="menu-icon" onClick={() => toggleSideBar()}>
                     <MenuIcon />
                 </div>
-                <span>{channel.name ? channel.name : 'Welcome'}</span>
+                <span>{channel.name ? channel.name : 'Welcome Channel'}</span>
             </div>
             <div className="close-button-wrap " onClick={() => toggleSideBar()}>
                 <CloseIcon />

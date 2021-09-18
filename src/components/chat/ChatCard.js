@@ -1,7 +1,9 @@
 import React from 'react';
+import moment from 'moment';
+import PropTypes from 'prop-types';
 import user from '../../assets/images/user2.png';
 
-const ChatCard = () => {
+const ChatCard = ({ data }) => {
     return (
         <div className="chart-card-wrap">
             <div>
@@ -9,24 +11,20 @@ const ChatCard = () => {
             </div>
             <div className="chart-card-message-container">
                 <div className="chart-card-text-wrap">
-                    <span className="chart-card-text-name">
-                        Courage Osemwengie
-                    </span>
+                    <span className="chart-card-text-name">{data.name}</span>
                     <span className="chart-card-text-date">
-                        yesterday at 2am
+                        {moment(data.createdAt).calendar()}
                     </span>
                 </div>
                 <div className="chart-message">
-                    <span>
-                        Suspendisse enim tellus, elementum quis dictum sed,
-                        sodales at mauris 😀 Suspendisse enim tellus, elementum
-                        quis dictum sed, sodales at mauris 😀 Suspendisse enim
-                        tellus, elementum quis dictum sed, sodales at mauris 😀
-                    </span>
+                    <span>{data.message}</span>
                 </div>
             </div>
         </div>
     );
 };
 
+ChatCard.propTypes = {
+    data: PropTypes.object,
+};
 export default ChatCard;
