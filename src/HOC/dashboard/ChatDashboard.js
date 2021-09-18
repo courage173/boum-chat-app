@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -16,20 +17,22 @@ const ChatDashboard = ({ children, toggleSidebar, getUser, getChannels }) => {
     }, []);
     const [showModal, toggleModal] = useState(false);
     return (
-        <div className="dashboard-main-wrap">
-            {showModal && <CreateChannelModal toggleModal={toggleModal} />}
-            <div
-                className={`side-bar-container ${
-                    toggleSidebar ? 'open-side-bar' : ''
-                }`}
-            >
-                <Sidebar toggleModal={toggleModal} />
+        <>
+            <div className="dashboard-main-wrap">
+                <div
+                    className={`side-bar-container ${
+                        toggleSidebar ? 'open-side-bar' : ''
+                    }`}
+                >
+                    <Sidebar toggleModal={toggleModal} />
+                </div>
+                <div className="dashboard-right-side">
+                    <Header />
+                    <div className="children-wrap">{children}</div>
+                </div>
+                {showModal && <CreateChannelModal toggleModal={toggleModal} />}
             </div>
-            <div className="dashboard-right-side">
-                <Header />
-                <div className="children-wrap">{children}</div>
-            </div>
-        </div>
+        </>
     );
 };
 

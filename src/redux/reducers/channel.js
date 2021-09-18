@@ -47,8 +47,6 @@ export default (state = initialState, action) => {
                 },
             });
         case types.CREATE_CHANNEL_SUCCESS:
-            // eslint-disable-next-line no-console
-            console.log(action.payload, state.channels);
             return Object.assign({}, state, {
                 createChannel: {
                     requesting: false,
@@ -148,14 +146,13 @@ export default (state = initialState, action) => {
         case types.JOIN_CHANNEL_USER_NOTIFICATION:
             return Object.assign({}, state, {
                 activeChannel: {
-                    channel: state.channels?.channels.find(
-                        channel => channel._id === action.payload.channelId
-                    ),
+                    channel: action.payload.channel,
                     messages: [].concat({
-                        ...action.payload,
+                        ...action.payload.data,
                         type: 'user',
                     }),
                 },
+                joinChannelRequest: false,
             });
         case types.NAVIGATE_TO_CHANNEL:
             return Object.assign({}, state, {
@@ -223,6 +220,10 @@ export default (state = initialState, action) => {
                 search: {
                     channels: [],
                 },
+            });
+        case types.JOIN_CHANNEL_RESET:
+            return Object.assign({}, state, {
+                joinChannelRequest: false,
             });
         default:
             return state;

@@ -8,10 +8,11 @@ import DefaultSidebar from './DefaultSidebar';
 import userImage from '../../assets/images/user2.png';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ChannelSidebar from './ChannelSidebar';
-import CreateChannelModal from '../modals/createChannel/CreateChannel';
+import ProfileModal from '../modals/profile/ProfileModal';
 
 const Sidebar = ({ user, toggleModal }) => {
     const [toggle, setToggle] = useState('');
+    const [open, setOpen] = useState(false);
     return (
         <>
             <div
@@ -21,6 +22,7 @@ const Sidebar = ({ user, toggleModal }) => {
                     justifyContent: 'space-between',
                     height: '100%',
                 }}
+                onClick={() => setOpen(false)}
             >
                 {toggle === 'channel' ? (
                     <ChannelSidebar handleClick={setToggle} />
@@ -30,7 +32,15 @@ const Sidebar = ({ user, toggleModal }) => {
                         toggleModal={toggleModal}
                     />
                 )}
-                <div className="sidebar-footer">
+                {open && <ProfileModal />}
+                <div
+                    className="sidebar-footer"
+                    onClick={e => {
+                        e.stopPropagation();
+                        setOpen(!open);
+                    }}
+                    style={{ cursor: 'pointer' }}
+                >
                     <div>
                         <img
                             alt="user image"
@@ -38,7 +48,10 @@ const Sidebar = ({ user, toggleModal }) => {
                             className="user-profile-image"
                         />
                     </div>
-                    <div className="sidebar-footer-profile-name ">
+                    <div
+                        className="sidebar-footer-profile-name "
+                        style={{ marginLeft: 5 }}
+                    >
                         <span>{user?.name}</span>
                     </div>
                     <div

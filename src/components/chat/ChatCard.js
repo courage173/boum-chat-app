@@ -12,7 +12,10 @@ const ChatCard = ({ data }) => {
             <div className="chart-card-message-container">
                 <div className="chart-card-text-wrap">
                     <span className="chart-card-text-name">{data.name}</span>
-                    <span className="chart-card-text-date">
+                    <span
+                        className="chart-card-text-date"
+                        style={{ marginLeft: 4 }}
+                    >
                         {moment(data.createdAt).calendar()}
                     </span>
                 </div>

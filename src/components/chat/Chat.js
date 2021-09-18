@@ -15,7 +15,7 @@ import FormField from '../../utils/form/FormField';
 import SendIcon from '@mui/icons-material/Send';
 import { sendMessage } from '../../redux/actions/channel';
 
-const Chat = ({ channel, sendMessage }) => {
+const Chat = ({ channel, sendMessage, requesting }) => {
     const messageRef = useRef(null);
     const scrollTobottom = () => {
         messageRef.current?.scrollIntoView({ behaviour: 'smooth' });
@@ -122,7 +122,18 @@ const Chat = ({ channel, sendMessage }) => {
         <ChatDashboard>
             <div className="chat-container">
                 <div className="chat-container-wrap">
-                    {channel?.channel?.name ? (
+                    {requesting ? (
+                        <div
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                height: '100%',
+                            }}
+                        >
+                            <span>Loading</span>
+                        </div>
+                    ) : channel?.channel?.name ? (
                         channel?.messages?.length === 0 ? (
                             <div
                                 style={{
@@ -178,11 +189,13 @@ const Chat = ({ channel, sendMessage }) => {
 Chat.propTypes = {
     channel: PropTypes.object,
     sendMessage: PropTypes.func,
+    requesting: PropTypes.bool,
 };
 const mapStateToProps = state => {
     return {
         user: state.user,
         channel: state.channel.activeChannel,
+        requesting: state.channel.joinChannelRequest,
     };
 };
 const mapDispatchToProps = dispatch => {
